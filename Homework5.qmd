@@ -44,6 +44,7 @@ heart_data |>
 print(heart_data)
 
 str(heart_data)
+
 #3
 #kNN model, create dummy variables for the character variables in the dataset.
 
@@ -54,16 +55,37 @@ heart_data$ExerciseAngina <- as.factor(heart_data$ExerciseAngina)
 
 print(heart_data)
 
-heart_data <- dummyVars(HeartDisease~., data = heart_data) |>
-  predict(heart_data) |>
-  as_tibble()
 
-colnames(heart_data)
+dummy_vars <- dummyVars(~ Sex + ChestPainType + RestingECG + ExerciseAngina, data = heart_data)
 
-dummy_vars <- dummyVars(HeartDisease~., data = heart_data)
-str(new_heart_data$HeartDiseaseFactor)
 heart_data_dum <- predict(dummy_vars, newdata = heart_data)
 
+heart_data_dum <- as.data.frame(heart_data_dum)
+heart_data <- cbind(heart_data, heart_data_dum)
+print(heart_data)
 
+
+```
+##Split your Data
+
+```{r}
+train <- createDataPartition(heart_data$HeartDisease,p = 0.7, list = FALSE)
+train_data <- heart_data[train, ]
+test_data <- heart_data[-train, ]
+
+dim(train_data)
+dim(test_data)
+```
+
+##kNN Model
+```{r}
+trcrtl <- trainControl(method = "repeatedcv", 
+                       number = 10,
+                       repeats = 3)
+
+knn_fit <- train(HeartDisease ~ .,
+                 data = train_data,
+                 method = "knn",
+                 trControl = trcrtl)
 ```
 

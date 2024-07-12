@@ -1,0 +1,69 @@
+---
+title: "Homework5 by Pranav Nair in ST558"
+format: html
+editor: visual
+---
+
+## Task 1
+
+
+
+## Task 2
+
+```{r}
+library(dplyr)
+library(httr)
+library(readr)
+library(caret)
+
+#1
+#First, read in the raw csv data file as an R object.
+heart_data <- read_csv("https://www4.stat.ncsu.edu/~online/datasets/heart.csv", col_names = TRUE)
+print(heart_data)
+
+
+#Next, find any missing data
+summary(heart_data)
+anyNA(heart_data)
+
+#filter out the observations that have a 0 in either cholesterol or restingBP
+
+#Summarize the data, especially with respect to HeartDisease variable
+summary(heart_data$HeartDisease)
+table(heart_data$HeartDisease)
+
+
+#2
+#Create a new variable that is a factor version of HeartDisease variable, and remove ST_Slope variable
+heart_data$HeartDisease <- as.factor(heart_data$HeartDisease)
+
+heart_data |>
+  select(-ST_Slope)
+  #filter(Cholesterol != 0 & RestingBP != 0)
+  
+print(heart_data)
+
+str(heart_data)
+#3
+#kNN model, create dummy variables for the character variables in the dataset.
+
+heart_data$Sex <- as.factor(heart_data$Sex)
+heart_data$ChestPainType <- as.factor(heart_data$ChestPainType)
+heart_data$RestingECG <- as.factor(heart_data$RestingECG)
+heart_data$ExerciseAngina <- as.factor(heart_data$ExerciseAngina)
+
+print(heart_data)
+
+heart_data <- dummyVars(HeartDisease~., data = heart_data) |>
+  predict(heart_data) |>
+  as_tibble()
+
+colnames(heart_data)
+
+dummy_vars <- dummyVars(HeartDisease~., data = heart_data)
+str(new_heart_data$HeartDiseaseFactor)
+heart_data_dum <- predict(dummy_vars, newdata = heart_data)
+
+
+```
+

@@ -15,6 +15,7 @@ library(dplyr)
 library(httr)
 library(readr)
 library(caret)
+library(class)
 
 #1
 #First, read in the raw csv data file as an R object.
@@ -83,9 +84,14 @@ trcrtl <- trainControl(method = "repeatedcv",
                        number = 10,
                        repeats = 3)
 
-knn_fit <- train(HeartDisease ~ .,
-                 data = train_data,
-                 method = "knn",
-                 trControl = trcrtl)
+
+library(class)
+knnfit <- knn(train = train_data[,-HeartDisease],
+               test = test_data[, -HeartDisease],
+               cl = train_data$HeartDisease,
+               k = 10)
+
+print(train_data)
+str(train_data)
 ```
 

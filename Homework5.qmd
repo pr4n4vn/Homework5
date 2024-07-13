@@ -157,8 +157,12 @@ colnames(train_data)
 #Random Forest
 library(randomForest)
 
+trcrtl <- trainControl(method = "repeatedcv", 
+                       number = 10,
+                       repeats = 3,
+                       verboseIter = FALSE)
 mtry_max = ncol(train_data)
-print(mtry_max)
+
 
 random_grid <- data.frame(mtry = 1:mtry_max)
 random_forest <- train(HeartDisease ~.,
@@ -166,7 +170,7 @@ random_forest <- train(HeartDisease ~.,
                          method = "rf",
                          trControl = trcrtl,
                          tuneGrid = random_grid)
-
+print(random_forest)
 
 
 #Boosted Tree

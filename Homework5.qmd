@@ -5,6 +5,22 @@ editor: visual
 ---
 
 ## Task 1
+### What is the purpose of using cross-validation when fitting a random forest model?
+The purpose is to make sure the model learns to predict all data instead of just one data group.
+
+### Describe the bagged tree algorithm.
+Bagged basically means resampling from the data, it can reduce overfitting and improves generalization.
+
+### What is meant by a general linear model?
+GLM is a regular linear regression model for a continuous response and allows for continuous and categorical predictors.
+
+
+### When fitting a multiple linear regression model, what does adding an interaction term do? That is, what does it allow the model to do differently as compared to when it is not included in the model?
+Adding an interaction term can focus on the relationship between predictors to capture nonlinear relationships or conditional effects.
+
+
+### Why do we split our data into a training and test set?
+This is to help the model get trained in learning the data (training data set), and then we test what it has learned by using the test data set.
 
 
 
